@@ -357,9 +357,9 @@ namespace FFXIVTataruHelper
             _MainWindow.govorilka.Rate = (int)_MainWindow.sliderSpeed.Value - 2; //-10 > 10
             _MainWindow.govorilka.SpeakAsync(_text);
         }
-        int audioIndex = 0;
-        List<RawSourceWaveStream> audstreams = new List<RawSourceWaveStream>();
-        WaveOut waveOut = new WaveOut();
+        //int audioIndex = 0;
+        //List<RawSourceWaveStream> audstreams = new List<RawSourceWaveStream>();
+        //WaveOut waveOut = new WaveOut();
 
         /*private async void Govori2(string _text)
         {
