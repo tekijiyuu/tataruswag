@@ -53,9 +53,9 @@ namespace FFXIVTataruHelper
 
         public static int MaxTranslateTryCount = 4;
 
-        public static string OldSettings = "../UserSettings.json";
+        public static string OldSettings = "./tengu/UserSettings.json";
 
-        public static string Settings = "../UserSettingsNew.json";
+        public static string Settings = "./tengu/UserSettingsNew.json";
 
         public static string BlackList = @"Resources\MsgBlackList.json";
 
