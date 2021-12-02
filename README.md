@@ -1,5 +1,5 @@
 # Tataru Swag Edition
-Это переделанный Tataru Helper https://github.com/NightlyRevenger/TataruHelper
+Это переделанный Tataru Helper https://github.com/NightlyRevenger/TataruHelper </br>
 Добавлена TTS говорилка.</br>
 
 - Tataru Swag  переводит и озвучивает только на русский язык.</br>
