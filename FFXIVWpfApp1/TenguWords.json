@@ -2,6 +2,7 @@
   "Y'shtola": "Иштола",
   "Alphinaud": "Альфинауд",
   "Merlwyb": "Мелвиб",
+  "Hoary": "Хоари",
   "sniffle>": "хнык>",
   "sniff>": "хнык>",
   "groan>": "охх>",
@@ -56,8 +57,9 @@
   "Follow me": "следуй за мной",
   "Lali-ho": "Лали хо",
   "Bloody hells": "Чёрт возьми",
-  " men": " human",
-  "instanced": "инстанса",
-  "instance": "инстанс",
-  " Ward ": " Район "
+  " men ": " human ",
+  " instanced": " инстанса",
+  " instance": " инстанс",
+  " Ward ": " Район ",
+  "distraught": "confused"
 }
