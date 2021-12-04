@@ -102,25 +102,26 @@ namespace Translation
             {"venture","adventure" },
             {"oh", "ах" }
         };*/
-        
+
         public string Translate(string inSentence, TranslationEngine translationEngine, TranslatorLanguague fromLang, TranslatorLanguague toLang)
         {
             string data = String.Empty;
             string name = String.Empty;
             string text = inSentence;
 
-            if (text.IndexOf(":")>0)
+            if (text.IndexOf(":") > 0)
             {
                 name = text.Split(':')[0];
                 text = text.Split(new string[] { ":" }, 2, StringSplitOptions.None)[1];
             }
             //azazaza
             text = text.Trim();
-            if(text.Contains("...") && text.Length>3)
+            if (text.Contains("...") && text.Length > 3)
                 text = text.TrimStart('.');
-           
-            foreach (var v in tenguwords.Keys)
-            {
+
+
+            /*foreach (var v in tenguwords.Keys)
+            { 
                 if (text.IndexOf(v, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     string v0 = v;
@@ -131,7 +132,52 @@ namespace Translation
                     //text = text.Replace(v, tenguwords[v]);
                     text = Regex.Replace(text, v0, tenguwords[v], RegexOptions.IgnoreCase);
                 }
+            }*/
+            //char[] patt = new char[] { ' ', ',', '.', ':', ';', '?', '!' };
+            foreach (var v in tenguwords.Keys)
+            {
+                //if (text.IndexOf(v, StringComparison.OrdinalIgnoreCase) >= 0 && v.IndexOfAny(patt) >=0)
+                //{ }
+                string v0 = v;
+                    if (v.Contains(@"?"))
+                        v0 = v0.Replace("?", @"\?");
+                    else if (v.Contains(@"."))
+                        v0 = v0.Replace(".", @"\.");
+                    //text = text.Replace(v, tenguwords[v]);
+                    text = Regex.Replace(text, v0, tenguwords[v], RegexOptions.IgnoreCase);
+               
             }
+              
+            /*string ss = "";
+            int start = 0, index;
+            if (text.IndexOfAny(patt) != -1)
+            {
+                while ((index = text.IndexOfAny(patt, start)) != -1)
+                {
+                    string ts = "";
+                    if (index - start > 0)
+                    {
+                        ts = text.Substring(start, index - start);
+                        foreach (var v in tenguwords.Keys)
+                        {
+                            if (ts.IndexOf(v, StringComparison.OrdinalIgnoreCase) >= 0 && ts.Trim().Length == v.Length)
+                            {
+                                ts = Regex.Replace(ts, v, tenguwords[v], RegexOptions.IgnoreCase);
+                            }
+                        }
+                    }
+                    ts = ts + text.Substring(index, 1);
+                    start = index + 1;
+
+                    ss = ss + ts;
+                }
+            }
+            else
+            {
+                if(tenguwords.ContainsKey(text))
+                    ss = Regex.Replace(text, text, tenguwords[text], RegexOptions.IgnoreCase);
+            }
+            text = ss.Length==0 ? text : ss;*/
             //
             //using (StreamWriter outputFile = new StreamWriter(@"Q:\tete.txt", true)) { outputFile.WriteLine(name+": "+text); }//azazaza
 

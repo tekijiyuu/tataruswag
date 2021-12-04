@@ -311,7 +311,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\MsgBlackList.json" />
-    <None Include="TenguWords.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
