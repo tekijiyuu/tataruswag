@@ -108,7 +108,7 @@ namespace Translation
             string data = String.Empty;
             string name = String.Empty;
             string text = inSentence;
-
+            
             if (text.IndexOf(":") > 0)
             {
                 name = text.Split(':')[0];
@@ -134,20 +134,66 @@ namespace Translation
                 }
             }*/
             //char[] patt = new char[] { ' ', ',', '.', ':', ';', '?', '!' };
-            foreach (var v in tenguwords.Keys)
+            //==            
+            /*foreach (var v in tenguwords.Keys)
             {
                 //if (text.IndexOf(v, StringComparison.OrdinalIgnoreCase) >= 0 && v.IndexOfAny(patt) >=0)
                 //{ }
                 string v0 = v;
-                    if (v.Contains(@"?"))
-                        v0 = v0.Replace("?", @"\?");
-                    else if (v.Contains(@"."))
-                        v0 = v0.Replace(".", @"\.");
-                    //text = text.Replace(v, tenguwords[v]);
-                    text = Regex.Replace(text, v0, tenguwords[v], RegexOptions.IgnoreCase);
-               
+                if (v.Contains(@"?"))
+                    v0 = v0.Replace("?", @"\?");
+                else if (v.Contains(@"."))
+                    v0 = v0.Replace(".", @"\.");
+                //text = text.Replace(v, tenguwords[v]);
+                text = Regex.Replace(text, v0, tenguwords[v], RegexOptions.IgnoreCase);
+
+            }*/
+            string optext = "";
+            string chtext = text;
+            if (chtext.IndexOf("─") >= 0) chtext = Regex.Replace(chtext, "─", " ─ ");
+            foreach (var v in tenguwords.Keys)
+            {
+                string v0 = v;
+                if (v.Contains(@"?"))
+                    v0 = v0.Replace("?", @"\?");
+                else if (v.Contains(@"."))
+                    v0 = v0.Replace(".", @"\.");
+                
+                if (chtext.IndexOf(v, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+
+                    Regex rxcheck = new Regex(@"[\s,.:;!?]");
+                    if (rxcheck.IsMatch(v) == false)
+                    {
+                        Regex rx = new Regex(@"[a-zA-Z0-9]");
+                        var split = Regex.Split(chtext, @"(?<=[\s,.:;!?])"); //@"(?<=[\s,.:;])"
+
+                        foreach (var s in split)
+                        {
+                            string word = s;
+                            int sres = 0;
+                            int baseind = s.IndexOf(v, StringComparison.OrdinalIgnoreCase);
+                            if (baseind >= 0)
+                            {
+                                int beforind = baseind - 1;
+                                int afterind = baseind + v.Length;
+                                sres = (beforind > 0 && rx.IsMatch(s.Substring(beforind, 1)) == true) ? ++sres : sres;
+                                sres = (afterind > 0 && afterind < s.Length && rx.IsMatch(s.Substring(afterind, 1)) == true) ? ++sres : sres;
+                                if (sres == 0) word = Regex.Replace(s, v0, tenguwords[v], RegexOptions.IgnoreCase);
+                            }
+                            optext = optext + word;
+
+                        }
+                    }
+                    else
+                    {
+                        optext = Regex.Replace(chtext, v0, tenguwords[v], RegexOptions.IgnoreCase);
+                    }
+                    chtext = optext;
+                }
             }
-              
+            text = chtext;
+            //==
             /*string ss = "";
             int start = 0, index;
             if (text.IndexOfAny(patt) != -1)
@@ -216,15 +262,16 @@ namespace Translation
             if (text != "...")
             {
                 string tempdata = GetTranZZ($"https://translate.google.com/m?&ie=UTF-8&prev=m&q={text}&sl=en&tl=ru");
+                
                 if (tempdata.IndexOf("Error") < 1)
                 {
-                    tempdata = System.Net.WebUtility.HtmlDecode(tempdata);
+                    tempdata = System.Net.WebUtility.HtmlDecode(tempdata);                   
                     if (tempdata.Contains(@"English</a></div><br><div dir=""ltr"" class=""t0"">"))
                         data = Regex.Match(tempdata, @"English</a></div><br><div dir=""ltr"" class=""t0"">(.+?)</div>").Groups[1].Value;
                     else if (tempdata.Contains(@"""result-container"">"))
                         data = Regex.Match(tempdata, @"""result-container"">(.+?)</div>").Groups[1].Value;
-                    else
-                        data = tempdata;
+                    //else
+                    //    data = tempdata;
                 }
             }
             else data = "...";
@@ -232,7 +279,18 @@ namespace Translation
                 data = data.Replace("<", "\"");
             if (data.Contains(">"))
                 data = data.Replace(">", "\"");
-            return name+":"+data;
+
+            if (data.Length > 71)
+            {
+                string substr = data.Substring(0, 36);
+                var fr = Regex.Split(data, substr);
+                if(fr.Count()>2)
+                    data=substr + fr[1];
+            }
+            //using (StreamWriter sw = File.CreateText(@"D:\z.txt")) { sw.WriteLine(tempdata); }
+
+            return name +":"+data;
+            
         }
         public static async Task<string> PostWebAsync(string url, string idata)
         {
