@@ -8,6 +8,7 @@
 - С включённой опцией, каждая последующая реплика будет обрывать предыдущую.</br>
 - Озвучивается текст только из первого окна перевода. Если вам нужно, что бы определенный текст переводился и не озвучивался, к примеру пати чат, то просто добавтье окно перевода кнопой плюс...</br>
 - Если есть "неправильные" слова/перевод, то можно это исправить, занеся слова/фразы в "словарь", который находиться в \tengu\TenguWords.json</br>
->>[СКАЧАТЬ Tataru Swag Edition](https://github.com/tekijiyuu/tataruswag/releases)
+>>[СКАЧАТЬ Tataru Swag Edition](https://github.com/tekijiyuu/tataruswag/releases)</br>
+>>[СКАЧАТЬ MILENA](https://disk.yandex.com/d/TaqQovxEUQ2-tw)
 
 ![swag](https://i.imgur.com/wu3JASD.png)
