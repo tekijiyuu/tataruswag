@@ -60,7 +60,7 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>app_icon2.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\tray_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
