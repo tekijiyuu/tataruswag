@@ -150,7 +150,7 @@ namespace Translation
             }*/
             string optext = "";
             string chtext = text;
-            if (chtext.IndexOf("─") >= 0) chtext = Regex.Replace(chtext, "─", " ─ ");
+            
             foreach (var v in tenguwords.Keys)
             {
                 string v0 = v;
@@ -162,7 +162,7 @@ namespace Translation
                 if (chtext.IndexOf(v, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
 
-                    Regex rxcheck = new Regex(@"[\s,.:;!?]");
+                    Regex rxcheck = new Regex(@"[\s]");
                     if (rxcheck.IsMatch(v) == false)
                     {
                         Regex rx = new Regex(@"[a-zA-Z0-9]");
@@ -177,7 +177,7 @@ namespace Translation
                             {
                                 int beforind = baseind - 1;
                                 int afterind = baseind + v.Length;
-                                sres = (beforind > 0 && rx.IsMatch(s.Substring(beforind, 1)) == true) ? ++sres : sres;
+                                sres = (beforind >= 0 && rx.IsMatch(s.Substring(beforind, 1)) == true) ? ++sres : sres;
                                 sres = (afterind > 0 && afterind < s.Length && rx.IsMatch(s.Substring(afterind, 1)) == true) ? ++sres : sres;
                                 if (sres == 0) word = Regex.Replace(s, v0, tenguwords[v], RegexOptions.IgnoreCase);
                             }
@@ -193,6 +193,7 @@ namespace Translation
                 }
             }
             text = chtext;
+            if (text.IndexOf("─") >= 0) text = Regex.Replace(chtext, "─", " ─ ");
             //==
             /*string ss = "";
             int start = 0, index;
