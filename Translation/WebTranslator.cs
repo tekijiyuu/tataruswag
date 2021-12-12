@@ -149,8 +149,7 @@ namespace Translation
 
             }*/
             string optext = "";
-            string chtext = text;
-            
+            string chtext = text;            
             foreach (var v in tenguwords.Keys)
             {
                 string v0 = v;
@@ -289,9 +288,7 @@ namespace Translation
                     data=substr + fr[1];
             }
             //using (StreamWriter sw = File.CreateText(@"D:\z.txt")) { sw.WriteLine(tempdata); }
-
-            return name +":"+data;
-            
+            return name +":"+data;            
         }
         public static async Task<string> PostWebAsync(string url, string idata)
         {
