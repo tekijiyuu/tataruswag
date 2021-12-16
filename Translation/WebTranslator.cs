@@ -118,6 +118,8 @@ namespace Translation
             text = text.Trim();
             if (text.Contains("...") && text.Length > 3)
                 text = text.TrimStart('.');
+            if (text.IndexOf(":") == 0)
+                text.Substring(1,text.Length);
 
 
             /*foreach (var v in tenguwords.Keys)
@@ -148,7 +150,7 @@ namespace Translation
                 text = Regex.Replace(text, v0, tenguwords[v], RegexOptions.IgnoreCase);
 
             }*/
-            string optext = "";
+            
             string chtext = text;            
             foreach (var v in tenguwords.Keys)
             {
@@ -160,7 +162,7 @@ namespace Translation
                 
                 if (chtext.IndexOf(v, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-
+                    string optext = "";
                     Regex rxcheck = new Regex(@"[\s]");
                     if (rxcheck.IsMatch(v) == false)
                     {
@@ -225,7 +227,7 @@ namespace Translation
             }
             text = ss.Length==0 ? text : ss;*/
             //
-            //using (StreamWriter outputFile = new StreamWriter(@"Q:\tete.txt", true)) { outputFile.WriteLine(name+": "+text); }//azazaza
+            //using (StreamWriter outputFile = new StreamWriter(@"D:\tete.txt", true)) { outputFile.WriteLine(name+": "+text); }//azazaza
 
 
             /*HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"https://translate.google.com/m?&ie=UTF-8&prev=m&q={text}&sl=en&tl=ru");
@@ -288,7 +290,7 @@ namespace Translation
                     data=substr + fr[1];
             }
             //using (StreamWriter sw = File.CreateText(@"D:\z.txt")) { sw.WriteLine(tempdata); }
-            return name +":"+data;            
+            return name.Length>1 ? name + ":"+data : data;            
         }
         public static async Task<string> PostWebAsync(string url, string idata)
         {
