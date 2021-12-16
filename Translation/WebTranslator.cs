@@ -159,12 +159,19 @@ namespace Translation
                     v0 = v0.Replace("?", @"\?");
                 else if (v.Contains(@"."))
                     v0 = v0.Replace(".", @"\.");
-                
-                if (chtext.IndexOf(v, StringComparison.OrdinalIgnoreCase) >= 0)
+
+                if (v0.IndexOf("@") >= 0)
+                    v0 = v0.Substring(1, v0.Length - 1);
+
+                if (chtext.IndexOf(v0, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     string optext = "";
                     Regex rxcheck = new Regex(@"[\s]");
-                    if (rxcheck.IsMatch(v) == false)
+                    if (rxcheck.IsMatch(v) == true || v.IndexOf("@") >= 0)                    
+                    {
+                        optext = Regex.Replace(chtext, v0, tenguwords[v], RegexOptions.IgnoreCase);
+                    }
+                    else
                     {
                         Regex rx = new Regex(@"[a-zA-Z0-9]");
                         var split = Regex.Split(chtext, @"(?<=[\s,.:;!?])"); //@"(?<=[\s,.:;])"
@@ -185,10 +192,6 @@ namespace Translation
                             optext = optext + word;
 
                         }
-                    }
-                    else
-                    {
-                        optext = Regex.Replace(chtext, v0, tenguwords[v], RegexOptions.IgnoreCase);
                     }
                     chtext = optext;
                 }
