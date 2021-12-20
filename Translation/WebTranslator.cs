@@ -114,6 +114,9 @@ namespace Translation
                 name = text.Split(':')[0];
                 text = text.Split(new string[] { ":" }, 2, StringSplitOptions.None)[1];
             }
+            if(name.Length>0 && text.Length<=1)
+            { name = ""; text= inSentence; }
+
             //azazaza
             text = text.Trim();
             if (text.Contains("...") && text.Length > 3)
