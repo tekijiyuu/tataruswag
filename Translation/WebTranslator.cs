@@ -93,7 +93,7 @@ namespace Translation
 
             return result;
         }
-        public Dictionary<string, string> tenguwords = new Dictionary<string, string>();
+        public static Dictionary<string, string> tenguwords = new Dictionary<string, string>();
         /*{
            { "Alphinaud", "Альфинауд" },
            { "Merlwyb", "Мелвиб" },

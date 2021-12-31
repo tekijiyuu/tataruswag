@@ -133,16 +133,7 @@ namespace FFXIVTataruHelper
             {
                 _WebTranslator.LoadLanguages();
                 _FFMemoryReader.Start();
-                if (File.Exists(Directory.GetCurrentDirectory() + @"\tengu\TenguWords.json")) //azazaza
-                {
-                    
-                    using (var stream = new StreamReader(Directory.GetCurrentDirectory() + @"\tengu\TenguWords.json"))
-                    {
-                       WebTranslator.tenguwords = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(stream.ReadToEnd());
-                    }
-                    //string jsonString = File.ReadAllText(Directory.GetCurrentDirectory() + @"\TenguWords.json");
-                    //WebTranslator.tenguwords = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
-                }
+
                 InitEvents();
             });
         }

@@ -250,6 +250,7 @@
                                 </CheckBox>
                                 <CheckBox x:Name="HideToTray" Content="{DynamicResource HideToTrayCB}" HorizontalAlignment="Left" Height="21" VerticalAlignment="Bottom" Width="158" Checked="HideToTray_Changed" Unchecked="HideToTray_Changed" Margin="0,0,0,2" />
                                 <CheckBox x:Name="checkboxVoice"  x:FieldModifier="public" Content="Озвучка" IsChecked="True"/>
+                                <CheckBox  x:Name="checkboxAutoDownWords" x:FieldModifier="public" Content="АвтоОбноваСловаря" IsChecked="True"/>
                                 <CheckBox x:Name="checkboxNOQueueSpeech" x:FieldModifier="public" Content="НеЖдатьКонцаДиалога" IsChecked="True"/>
                                 <Label x:Name="labelSpeedSlider" Content="Label" x:FieldModifier="public"/>
                                 <Slider x:Name="sliderSpeed" x:FieldModifier="public" SmallChange="1" Minimum="-4" Maximum="6" ValueChanged="sliderSpeed_ValueChanged" LargeChange="2" Value="1"/>

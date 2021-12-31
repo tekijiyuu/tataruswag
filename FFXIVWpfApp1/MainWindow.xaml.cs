@@ -23,6 +23,9 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Reflection;
 using System.Speech.Synthesis;
+using System.Net;
+using System.Collections.Generic;
+using System.Text;
 
 namespace FFXIVTataruHelper
 {
@@ -72,7 +75,7 @@ namespace FFXIVTataruHelper
                 _LogWriter = new LogWriter();
                 _LogWriter.StartWriting();
 
-                Logger.WriteLog("TataruHelper SWAG Edition v" + Convert.ToString(System.Reflection.Assembly.GetEntryAssembly().GetName().Version));
+                Logger.WriteLog("Tataru SWAG Edition v" + Convert.ToString(System.Reflection.Assembly.GetEntryAssembly().GetName().Version));
             }
             catch (Exception ex)
             {
@@ -174,14 +177,16 @@ namespace FFXIVTataruHelper
             public bool? Voice { get; set; }
             public bool? NoQueueVoice { get; set; }
             public int VoiceIndex { get; set; }
-        }
-        ConfigClass Config = new ConfigClass
+            public bool? AutoDownWords { get; set; }
+    }
+        public ConfigClass Config = new ConfigClass
         {
             sliderSpeed = 0,
             sliderSpeechVolume = 100,
             Voice = true,
             NoQueueVoice = true,
-            VoiceIndex = 0
+            VoiceIndex = 0,
+            AutoDownWords = true
         };
         #endregion
         public SpeechSynthesizer govorilka = new SpeechSynthesizer();
@@ -208,14 +213,31 @@ namespace FFXIVTataruHelper
                 checkboxVoice.IsChecked = Config.Voice;
                 if(Config.VoiceIndex < comboboxVoiceSelector.Items.Count)
                     comboboxVoiceSelector.SelectedIndex = Config.VoiceIndex;
+                checkboxAutoDownWords.IsChecked = Config.AutoDownWords;
             }
             labelSpeedSlider.Content = $"Скорость речи: {(int)sliderSpeed.Value}";
             labelSpeechVolume.Content = $"Громкость речи: {(int)sliderSpeechVolume.Value}";
 
+            if (Config.AutoDownWords == true)
+            {
+                string rr = GetWordZZ("https://raw.githubusercontent.com/tekijiyuu/tataruswag/main/dictionary/TenguWords.json");
+                if (rr != "Error")
+                { using (StreamWriter outputFile = new StreamWriter(Directory.GetCurrentDirectory() + @"\tengu\TenguWords.json", false)) { outputFile.Write(rr); } }
+            }
+            if (File.Exists(Directory.GetCurrentDirectory() + @"\tengu\TenguWords.json")) //azazaza
+            {
+                using (var stream = new StreamReader(Directory.GetCurrentDirectory() + @"\tengu\TenguWords.json"))
+                {
+                    Translation.WebTranslator.tenguwords = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(stream.ReadToEnd());
+                }
+                //string jsonString = File.ReadAllText(Directory.GetCurrentDirectory() + @"\TenguWords.json");
+                //WebTranslator.tenguwords = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
+            }
+
             //0---------
             try
             {
-                Logger.WriteLog("TataruHelper SWAG EDITION v" + Convert.ToString(System.Reflection.Assembly.GetEntryAssembly().GetName().Version));
+                Logger.WriteLog("Tataru SWAG EDITION v" + Convert.ToString(System.Reflection.Assembly.GetEntryAssembly().GetName().Version));
             }
             catch (Exception) { }
 
@@ -273,7 +295,32 @@ namespace FFXIVTataruHelper
             }
             
         }
-        
+        //azaza
+        public string GetWordZZ(string _url)
+        {
+            string result = "Error";
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_url);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    Stream receiveStream = response.GetResponseStream();
+                    StreamReader readStream = null;
+
+                    if (String.IsNullOrWhiteSpace(response.CharacterSet))
+                        readStream = new StreamReader(receiveStream);
+                    else
+                        readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+
+                    result = readStream.ReadToEnd();
+                    response.Close();
+                    readStream.Close();
+                }
+            }
+            catch { } //(Exception ex) { MessageBox.Show(ex.StackTrace); }
+            return result;
+        }
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             System.Drawing.PointD winSize = new System.Drawing.PointD(this.Width, this.Height);
@@ -291,6 +338,7 @@ namespace FFXIVTataruHelper
             Config.NoQueueVoice = checkboxNOQueueSpeech.IsChecked;
             Config.Voice = checkboxVoice.IsChecked;
             Config.VoiceIndex = comboboxVoiceSelector.SelectedIndex;
+            Config.AutoDownWords = checkboxAutoDownWords.IsChecked;
             using (StreamWriter file = File.CreateText(Directory.GetCurrentDirectory() + @"\tengu\TenguConfig.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
