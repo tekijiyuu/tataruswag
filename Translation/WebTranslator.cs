@@ -169,13 +169,13 @@ namespace Translation
                 if (chtext.IndexOf(v0, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     string optext = "";
-                    Regex rxcheck = new Regex(@"[\s]");
+                    /*Regex rxcheck = new Regex(@"[\s]");
                     if (rxcheck.IsMatch(v) == true || v.IndexOf("@") >= 0)                    
                     {
                         optext = Regex.Replace(chtext, v0, tenguwords[v], RegexOptions.IgnoreCase);
                     }
                     else
-                    {
+                    {*/
                         Regex rx = new Regex(@"[a-zA-Z0-9]");
                         var split = Regex.Split(chtext, @"(?<=[\s,.:;!?])"); //@"(?<=[\s,.:;])"
 
@@ -192,10 +192,18 @@ namespace Translation
                                 sres = (afterind > 0 && afterind < s.Length && rx.IsMatch(s.Substring(afterind, 1)) == true) ? ++sres : sres;
                                 if (sres == 0) word = Regex.Replace(s, v0, tenguwords[v], RegexOptions.IgnoreCase);
                             }
+                            if(Regex.IsMatch(word, @"(.)\1{2,}", RegexOptions.IgnoreCase))
+                            {
+                                MatchCollection aaa = Regex.Matches(word, @"(.)\1{2,}", RegexOptions.IgnoreCase);
+                                foreach (Match ee in aaa)
+                                {
+                                    word = Regex.Replace(word, ee.Value, ee.Value.Substring(0, 2));
+                                }
+                            }
                             optext = optext + word;
 
                         }
-                    }
+                    //}
                     chtext = optext;
                 }
             }
