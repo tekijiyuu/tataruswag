@@ -189,15 +189,7 @@ namespace Translation
                                 sres = (beforind >= 0 && rx.IsMatch(s.Substring(beforind, 1)) == true) ? ++sres : sres;
                                 sres = (afterind > 0 && afterind < s.Length && rx.IsMatch(s.Substring(afterind, 1)) == true) ? ++sres : sres;
                                 if (sres == 0) word = Regex.Replace(s, v0, tenguwords[v], RegexOptions.IgnoreCase);
-                            }
-                            if(Regex.IsMatch(word, @"(.)\1{2,}", RegexOptions.IgnoreCase))
-                            {
-                                MatchCollection aaa = Regex.Matches(word, @"(.)\1{2,}", RegexOptions.IgnoreCase);
-                                foreach (Match ee in aaa)
-                                {
-                                    word = Regex.Replace(word, ee.Value, ee.Value.Substring(0, 2));
-                                }
-                            }
+                            }                            
                             optext = optext + word;
 
                         }
@@ -271,7 +263,15 @@ namespace Translation
                 readStream.Close();
             }
             return name+":"+data;*/
-
+            if (Regex.IsMatch(text, @"(.)\1{2,}", RegexOptions.IgnoreCase))
+            {
+                MatchCollection aaa = Regex.Matches(text, @"(.)\1{2,}", RegexOptions.IgnoreCase);
+                foreach (Match ee in aaa)
+                {
+                    if (ee.Value.IndexOf("???") < 0 && ee.Value.IndexOf("...") < 0)
+                        text = Regex.Replace(text, ee.Value, ee.Value.Substring(0, 2));
+                }
+            }
             if (text != "...")
             {
                 string tempdata = GetTranZZ($"https://translate.google.com/m?&ie=UTF-8&prev=m&q={text}&sl=en&tl=ru");
@@ -301,6 +301,15 @@ namespace Translation
                     data=substr + fr[1];
             }
             //using (StreamWriter sw = File.CreateText(@"D:\z.txt")) { sw.WriteLine(tempdata); }
+            if (Regex.IsMatch(data, @"(.)\1{2,}", RegexOptions.IgnoreCase))
+            {
+                MatchCollection aaa = Regex.Matches(data, @"(.)\1{2,}", RegexOptions.IgnoreCase);
+                foreach (Match ee in aaa)
+                {
+                    if (ee.Value.IndexOf("???") < 0 && ee.Value.IndexOf("...") < 0)
+                        data = Regex.Replace(data, ee.Value, ee.Value.Substring(0, 2));
+                }
+            }
             return name.Length>1 ? name + ":"+data : data;            
         }
         public static async Task<string> PostWebAsync(string url, string idata)

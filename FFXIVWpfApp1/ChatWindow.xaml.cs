@@ -13,6 +13,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
 using System.Speech.Synthesis;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -430,6 +431,7 @@ namespace FFXIVTataruHelper
                 translatedMsg = translatedMsg.Trim(new char[] { ' ' });
                 translatedMsg = translatedMsg.Replace(" ...", "..."); //azazaza
                 if (translatedMsg.Contains("/div")) translatedMsg = ""; //azazaza
+                
                 ChatRtb.AppendText(Environment.NewLine);
                 ChatRtb.CaretPosition = ChatRtb.CaretPosition.DocumentEnd;
 
