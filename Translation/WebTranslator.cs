@@ -169,13 +169,11 @@ namespace Translation
                 if (chtext.IndexOf(v0, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     string optext = "";
-                    /*Regex rxcheck = new Regex(@"[\s]");
+                    Regex rxcheck = new Regex(@"[\s]");
                     if (rxcheck.IsMatch(v) == true || v.IndexOf("@") >= 0)                    
                     {
-                        optext = Regex.Replace(chtext, v0, tenguwords[v], RegexOptions.IgnoreCase);
+                        chtext = Regex.Replace(chtext, v0, tenguwords[v], RegexOptions.IgnoreCase);
                     }
-                    else
-                    {*/
                         Regex rx = new Regex(@"[a-zA-Z0-9]");
                         var split = Regex.Split(chtext, @"(?<=[\s,.:;!?])"); //@"(?<=[\s,.:;])"
 
@@ -203,7 +201,6 @@ namespace Translation
                             optext = optext + word;
 
                         }
-                    //}
                     chtext = optext;
                 }
             }
