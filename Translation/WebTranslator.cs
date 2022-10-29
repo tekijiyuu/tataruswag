@@ -166,7 +166,7 @@ namespace Translation
                 if (v0.IndexOf("@") >= 0)
                     v0 = v0.Substring(1, v0.Length - 1);
 
-                if (chtext.IndexOf(v, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (chtext.IndexOf(v0, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     string optext = "";
                     Regex rxcheck = new Regex(@"[\s]");
